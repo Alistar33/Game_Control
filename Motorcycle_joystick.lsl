@@ -82,7 +82,7 @@ default
         // VEHICLE_FLAG_LIMIT_ROLL_ONLY = modifies the behavior of the vertidal attractor
         //    (see VEHICLE_VERTICAL_ATTRACTION fields below) to only limit the vehicle's "roll"
         //    (e.g. rotation about the forward axis) and not pitch.
-        llSetVehicleFlags(VEHICLE_FLAG_LIMIT_MOTOR_UP | VEHICLE_FLAG_LIMIT_ROLL_ONLY);
+               llSetVehicleFlags(VEHICLE_FLAG_NO_DEFLECTION_UP | VEHICLE_FLAG_LIMIT_ROLL_ONLY | VEHICLE_FLAG_LIMIT_MOTOR_UP | VEHICLE_FLAG_BLOCK_INTERFERENCE); //anti-cheater feature too
         
         // LINEAR_DEFLECTION coefficients determine the ability of the vehicle to divert
         //    sideways velocity into forward velocity.  For simplest tuning: always set the
