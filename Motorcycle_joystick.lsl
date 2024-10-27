@@ -245,7 +245,88 @@ default
     
     control(key id, integer level, integer edge)
     {
-  
+
+/* Original Control Event:
+
+        integer key_control = FALSE;
+        if(level & CONTROL_FWD)
+        {
+            gLinearMotor.x = gLinearMotor.x + gLinearRamp * (gMaxFwdSpeed - gLinearMotor.x);
+            key_control = TRUE;
+        }
+        if(level & CONTROL_BACK)
+        {
+            gLinearMotor.x = gLinearMotor.x + gLinearRamp * (gMaxBackSpeed - gLinearMotor.x);
+            key_control = TRUE;
+        }
+        if (key_control)
+        {
+            llSetVehicleVectorParam(VEHICLE_LINEAR_MOTOR_DIRECTION, gLinearMotor);
+            key_control = FALSE;
+        }
+        else
+        {
+            if (gLinearMotor.x > 15 || gLinearMotor.x < -5)
+            {
+                // Automatically reduce the motor if keys are let up when moving fast.
+                gLinearMotor.x *= 0.8;
+                llSetVehicleVectorParam(VEHICLE_LINEAR_MOTOR_DIRECTION, gLinearMotor);
+                
+            }
+            else
+            {
+                // reduce the linear motor accumulator for the next control() event
+                gLinearMotor.x *= 0.8;
+            }
+                
+        }
+        
+        // angular
+        if(level & (CONTROL_RIGHT|CONTROL_ROT_RIGHT))
+        {
+            gAngularMotor.x = gAngularMotor.x + gAngularRamp * (gMaxTurnSpeed - gAngularMotor.x);
+            key_control = TRUE;
+        }
+        if(level & (CONTROL_LEFT | CONTROL_ROT_LEFT))
+        {
+            gAngularMotor.x = gAngularMotor.x - gAngularRamp * (gMaxTurnSpeed + gAngularMotor.x);
+            key_control = TRUE;
+        }
+        if(level & CONTROL_UP)
+        {
+            gAngularMotor.y = gAngularMotor.y - gAngularRamp * (gMaxWheelieSpeed + gAngularMotor.y);
+            key_control = TRUE;
+        }
+        if (key_control)
+        {
+            // turn on banking and apply angular motor
+            gBank = 3.0;
+            llSetVehicleFloatParam(VEHICLE_BANKING_EFFICIENCY, gBank);
+            llSetVehicleVectorParam(VEHICLE_ANGULAR_MOTOR_DIRECTION, gAngularMotor);
+            gAngularMotor *= 0.95;   // light attenuation
+        }
+        else
+        {
+            if (gAngularMotor.x > 4
+                || gAngularMotor.x < -4)
+            {
+                // We were turning hard, but no longer  ==> reduce banking to help 
+                // the motorcycle travel straight when bouncing on rough terrain.
+                // Also, turn off the angular motor ==> faster upright recovery.
+                gAngularMotor *= 0.4;
+                gBank *= 0.5;
+                llSetVehicleFloatParam(VEHICLE_BANKING_EFFICIENCY, gBank);
+                llSetVehicleVectorParam(VEHICLE_ANGULAR_MOTOR_DIRECTION, gAngularMotor);
+            }
+            else
+            {
+                // reduce banking for straigher travel when not actively turning
+                gAngularMotor *= 0.5;
+                gBank *= 0.8;
+                llSetVehicleFloatParam(VEHICLE_BANKING_EFFICIENCY, gBank);
+            }
+        }
+    */
         // I've rebuilt the whole control event in a simply way, same behavior as Game_Control function. (Alistar)
 
         if (options != 3) return;
